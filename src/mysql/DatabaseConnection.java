@@ -4,26 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DatabaseConnection {
-
-    String driver;
-    String dbName;
-    String connectionURL;
-    String username;
-    String password;
+    private final String driver;
+    private final String dbName;
+    private final String connectionURL;
+    private final String ssl;
+    private final String username;
+    private final String password;
 
     public DatabaseConnection() {
         driver = "com.mysql.jdbc.Driver";
         connectionURL = "jdbc:mysql://localhost:3306/";
         dbName = "candy-shop";
+        ssl = "?autoReconnect=true&useSSL=false";
         username = "root";
         password = "";
     }
 
     public Connection getConnection() throws Exception {
         Class.forName(driver);
-        Connection connection = DriverManager.getConnection(connectionURL + dbName, username, password);
 
-        return connection;
+        return DriverManager.getConnection(connectionURL + dbName + ssl, username, password);
     }
 
     public static void main(String[] args) {
@@ -36,5 +36,4 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
-
 }
